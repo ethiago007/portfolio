@@ -11,28 +11,29 @@ export default function Contact() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus("sending");
-    try {
-      const res = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          "form-name": "contact",
-          ...form,
-        }).toString(),
-      });
-      if (res.ok) {
-        setStatus("success");
-        setForm({ name: "", email: "", service: "", message: "" });
-      } else {
-        setStatus("error");
-      }
-    } catch {
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setStatus("sending");
+
+  const formData = new FormData(e.target);
+
+  try {
+    const res = await fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(formData).toString(),
+    });
+
+    if (res.ok) {
+      setStatus("success");
+      setForm({ name: "", email: "", service: "", message: "" });
+    } else {
       setStatus("error");
     }
-  };
+  } catch {
+    setStatus("error");
+  }
+};
 
   const links = [
     { label: "GitHub", href: "https://github.com/ethiago007" },

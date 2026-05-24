@@ -82,7 +82,7 @@ const experiences = [
     company: "Freelance (Remote)",
     role: "Frontend Web Developer",
     desc: "Building responsive, scalable websites and web apps for clients using React, Tailwind CSS, and JavaScript. Handling projects end-to-end from design to deployment.",
-    tags: ["React", "Tailwind", "JavaScript", "Netlify"],
+    tags: ["React", "Tailwind", "JavaScript", "Node.js"],
     accent: "#ff6b35",
     current: true,
   },

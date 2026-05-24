@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 export default function Contact() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [status, setStatus] = useState("idle"); 
   const [form, setForm] = useState({ name: "", email: "", service: "", message: "" });
 
   const handleChange = (e) => {
@@ -18,11 +18,15 @@ const handleSubmit = async (e) => {
   const formData = new FormData(e.target);
 
   try {
-    const res = await fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(formData).toString(),
-    });
+ const BACKEND_URL = import.meta.env.DEV
+  ? "http://localhost:4000"
+  : "https://portfolio-backend-8cf0.onrender.com";
+
+const res = await fetch(`${BACKEND_URL}/contact`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(form),
+});
 
     if (res.ok) {
       setStatus("success");

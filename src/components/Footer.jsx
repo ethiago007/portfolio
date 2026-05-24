@@ -11,7 +11,7 @@ export default function Footer() {
         className="text-[#2a2a28] text-[0.65rem] tracking-widest uppercase"
         style={{ fontFamily: "'Space Mono', monospace" }}
       >
-        © {new Date().getFullYear()} Kamaldeen Mohammed. Built with React.
+        © {new Date().getFullYear()} Kamaldeen Mohammed. 
       </span>
       <a
         href="#hero"

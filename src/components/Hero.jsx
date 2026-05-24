@@ -137,7 +137,7 @@ export default function Hero() {
           className="text-[#7a7870] text-sm leading-relaxed font-light max-w-sm"
           style={{ fontFamily: "'DM Sans', sans-serif" }}
         >
-          I wear many hats — and wear them well. From pixels to pipelines,
+          I wear many hats and wear them well. From pixels to pipelines,
           campaigns to communities, I build things that{" "}
           <span className="text-[#f0ede6]">actually work.</span>
         </p>

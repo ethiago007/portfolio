@@ -17,63 +17,94 @@ export default function Contact() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus("sending");
+  e.preventDefault()
+  setStatus('sending')
 
-    try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
-          name: form.name,
-          email: form.email,
-          service: form.service,
-          message: form.message,
-          subject: `New Inquiry — ${form.service || "General"} from ${form.name}`,
-          html: `
-    <div style="font-family:monospace;max-width:600px;margin:0 auto;padding:32px;background:#0a0a08;color:#f0ede6;border:1px solid #2a2a28;">
-      <h1 style="color:#e8ff47;font-size:28px;margin-bottom:4px;letter-spacing:2px;">NEW MESSAGE</h1>
-      <p style="color:#7a7870;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:32px;">Via Portfolio Contact Form</p>
-      <table style="width:100%;border-collapse:collapse;">
-        <tr style="border-bottom:1px solid #2a2a28;">
-          <td style="padding:12px 0;color:#7a7870;font-size:11px;text-transform:uppercase;letter-spacing:2px;width:120px;">Name</td>
-          <td style="padding:12px 0;color:#f0ede6;font-size:14px;">${form.name}</td>
-        </tr>
-        <tr style="border-bottom:1px solid #2a2a28;">
-          <td style="padding:12px 0;color:#7a7870;font-size:11px;text-transform:uppercase;letter-spacing:2px;">Email</td>
-          <td style="padding:12px 0;color:#e8ff47;font-size:14px;">${form.email}</td>
-        </tr>
-        <tr style="border-bottom:1px solid #2a2a28;">
-          <td style="padding:12px 0;color:#7a7870;font-size:11px;text-transform:uppercase;letter-spacing:2px;">Service</td>
-          <td style="padding:12px 0;color:#f0ede6;font-size:14px;">${form.service || "Not specified"}</td>
-        </tr>
-        <tr>
-          <td style="padding:12px 0;color:#7a7870;font-size:11px;text-transform:uppercase;letter-spacing:2px;vertical-align:top;">Message</td>
-          <td style="padding:12px 0;color:#f0ede6;font-size:14px;line-height:1.7;">${form.message.replace(/\n/g, "<br/>")}</td>
-        </tr>
-      </table>
-      <div style="margin-top:32px;padding-top:24px;border-top:1px solid #2a2a28;">
-        <p style="color:#7a7870;font-size:11px;letter-spacing:2px;">Hit reply to respond directly to ${form.name}.</p>
-      </div>
-    </div>
-  `,
-        }),
-      });
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/contact`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:    form.name,
+        email:   form.email,
+        service: form.service,
+        message: form.message,
+      }),
+    })
 
-      const data = await res.json();
+    const data = await res.json()
 
-      if (data.success) {
-        setStatus("success");
-        setForm({ name: "", email: "", service: "", message: "" });
-      } else {
-        setStatus("error");
-      }
-    } catch (err) {
-      console.error(err);
-      setStatus("error");
+    if (res.ok && data.success) {
+      setStatus('success')
+      setForm({ name: '', email: '', service: '', message: '' })
+    } else {
+      console.error('Error from server:', data.error)
+      setStatus('error')
     }
-  };
+  } catch (err) {
+    console.error('Network error:', err)
+    setStatus('error')
+  }
+}
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setStatus("sending");
+
+//     try {
+//       const res = await fetch("https://api.web3forms.com/submit", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({
+//           access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+//           name: form.name,
+//           email: form.email,
+//           service: form.service,
+//           message: form.message,
+//           subject: `New Inquiry — ${form.service || "General"} from ${form.name}`,
+//           html: `
+//     <div style="font-family:monospace;max-width:600px;margin:0 auto;padding:32px;background:#0a0a08;color:#f0ede6;border:1px solid #2a2a28;">
+//       <h1 style="color:#e8ff47;font-size:28px;margin-bottom:4px;letter-spacing:2px;">NEW MESSAGE</h1>
+//       <p style="color:#7a7870;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:32px;">Via Portfolio Contact Form</p>
+//       <table style="width:100%;border-collapse:collapse;">
+//         <tr style="border-bottom:1px solid #2a2a28;">
+//           <td style="padding:12px 0;color:#7a7870;font-size:11px;text-transform:uppercase;letter-spacing:2px;width:120px;">Name</td>
+//           <td style="padding:12px 0;color:#f0ede6;font-size:14px;">${form.name}</td>
+//         </tr>
+//         <tr style="border-bottom:1px solid #2a2a28;">
+//           <td style="padding:12px 0;color:#7a7870;font-size:11px;text-transform:uppercase;letter-spacing:2px;">Email</td>
+//           <td style="padding:12px 0;color:#e8ff47;font-size:14px;">${form.email}</td>
+//         </tr>
+//         <tr style="border-bottom:1px solid #2a2a28;">
+//           <td style="padding:12px 0;color:#7a7870;font-size:11px;text-transform:uppercase;letter-spacing:2px;">Service</td>
+//           <td style="padding:12px 0;color:#f0ede6;font-size:14px;">${form.service || "Not specified"}</td>
+//         </tr>
+//         <tr>
+//           <td style="padding:12px 0;color:#7a7870;font-size:11px;text-transform:uppercase;letter-spacing:2px;vertical-align:top;">Message</td>
+//           <td style="padding:12px 0;color:#f0ede6;font-size:14px;line-height:1.7;">${form.message.replace(/\n/g, "<br/>")}</td>
+//         </tr>
+//       </table>
+//       <div style="margin-top:32px;padding-top:24px;border-top:1px solid #2a2a28;">
+//         <p style="color:#7a7870;font-size:11px;letter-spacing:2px;">Hit reply to respond directly to ${form.name}.</p>
+//       </div>
+//     </div>
+//   `,
+//         }),
+//       });
+
+//       const data = await res.json();
+
+//       if (data.success) {
+//         setStatus("success");
+//         setForm({ name: "", email: "", service: "", message: "" });
+//       } else {
+//         setStatus("error");
+//       }
+//     } catch (err) {
+//       console.error(err);
+//       setStatus("error");
+//     }
+//   };
 
   const links = [
     { label: "GitHub", href: "https://github.com/ethiago007" },

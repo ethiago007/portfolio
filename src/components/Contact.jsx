@@ -17,7 +17,7 @@ const handleSubmit = async (e) => {
 
   const BACKEND_URL = import.meta.env.DEV
     ? "http://localhost:4000"
-    : "portfolio-backend-production-a6cf.up.railway.app";
+    : "https://portfolio-backend-production-a6cf.up.railway.app";
 
   try {
     const res = await fetch(`${BACKEND_URL}/contact`, {

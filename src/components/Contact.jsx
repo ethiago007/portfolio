@@ -15,29 +15,30 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   setStatus("sending");
 
-  const BACKEND_URL = import.meta.env.DEV
-    ? "http://localhost:4000"
-    : "https://portfolio-backend-production-a6cf.up.railway.app";
-
   try {
-    const res = await fetch(`${BACKEND_URL}/contact`, {
+    const res = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+      body: JSON.stringify({
+  access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+  name: form.name,
+  email: form.email,
+  service: form.service,
+  message: form.message,
+  subject: `New Inquiry — ${form.service || "General"} from ${form.name}`,
+}),
     });
 
     const data = await res.json();
-    console.log("Response:", res.status, data);
 
-    if (res.ok && data.success) {
+    if (data.success) {
       setStatus("success");
       setForm({ name: "", email: "", service: "", message: "" });
     } else {
-      console.error("Backend error:", data);
       setStatus("error");
     }
   } catch (err) {
-    console.error("Fetch failed:", err);
+    console.error(err);
     setStatus("error");
   }
 };

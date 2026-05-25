@@ -4,44 +4,49 @@ import { useRef, useState } from "react";
 export default function Contact() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [status, setStatus] = useState("idle"); 
-  const [form, setForm] = useState({ name: "", email: "", service: "", message: "" });
+  const [status, setStatus] = useState("idle");
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    service: "",
+    message: "",
+  });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setStatus("sending");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("sending");
 
-  try {
-    const res = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-  access_key: import.meta.env.VITE_WEB3FORMS_KEY,
-  name: form.name,
-  email: form.email,
-  service: form.service,
-  message: form.message,
-  subject: `New Inquiry — ${form.service || "General"} from ${form.name}`,
-}),
-    });
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+          name: form.name,
+          email: form.email,
+          service: form.service,
+          message: form.message,
+          subject: `New Inquiry — ${form.service || "General"} from ${form.name}`,
+        }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (data.success) {
-      setStatus("success");
-      setForm({ name: "", email: "", service: "", message: "" });
-    } else {
+      if (data.success) {
+        setStatus("success");
+        setForm({ name: "", email: "", service: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error(err);
       setStatus("error");
     }
-  } catch (err) {
-    console.error(err);
-    setStatus("error");
-  }
-};
+  };
 
   const links = [
     { label: "GitHub", href: "https://github.com/ethiago007" },
@@ -50,7 +55,10 @@ const handleSubmit = async (e) => {
   ];
 
   return (
-    <section id="contact" className="bg-[#090908] px-8 md:px-16 py-28 relative overflow-hidden">
+    <section
+      id="contact"
+      className="bg-[#090908] px-8 md:px-16 py-28 relative overflow-hidden"
+    >
       {/* Background word */}
       <div
         className="absolute -bottom-24 -right-12 text-[28vw] font-black leading-none select-none pointer-events-none opacity-[0.03]"
@@ -133,8 +141,8 @@ const handleSubmit = async (e) => {
           {/* Links */}
           <div className="flex flex-col gap-4 border-t border-[#1f1f1d] pt-8">
             {links.map((link) => (
-              
-              <a  key={link.label}
+              <a
+                key={link.label}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -246,29 +254,28 @@ const handleSubmit = async (e) => {
                 >
                   What do you need?
                 </label>
-                <select
-                  name="service"
-                  required
-                  value={form.service}
-                  onChange={handleChange}
-                  className="bg-[#0f0f0e] border border-[#1f1f1d] text-[#f0ede6] px-4 py-3 text-sm outline-none focus:border-[#e8ff47] transition-colors duration-300 appearance-none cursor-pointer"
-                  style={{ fontFamily: "'DM Sans', sans-serif" }}
-                >
-                  <option value="" disabled>
-                    Select a service
-                  </option>
-                  <option value="Web Development">Web Development</option>
-                  <option value="Meta Ads">Meta Ads</option>
-                  <option value="Lead Generation">Lead Generation</option>
-                  <option value="Social Media Management">Social Media Management</option>
-                  <option value="Community Management">Community Management</option>
-                  <option value="Virtual Assistant">Virtual Assistant</option>
-                  <option value="Data Entry">Data Entry</option>
-                  <option value="App Tester">App Tester</option>
-                  <option value="Other">Other</option>
-                </select>
+                 <div className="relative">
+    <select
+      name="service"
+      required
+      value={form.service}
+      onChange={handleChange}
+      className="w-full bg-[#0f0f0e] border border-[#1f1f1d] text-[#f0ede6] px-4 py-3 text-sm outline-none focus:border-[#e8ff47] transition-colors duration-300 appearance-none cursor-pointer"
+      style={{ fontFamily: "'DM Sans', sans-serif" }}
+    >
+      <option value="" disabled>Select a service</option>
+      <option value="Web Development">Web Development</option>
+      <option value="Meta Ads">Meta Ads</option>
+      <option value="Lead Generation">Lead Generation</option>
+      <option value="Social Media Management">Social Media Management</option>
+      <option value="Community Management">Community Management</option>
+      <option value="Virtual Assistant">Virtual Assistant</option>
+      <option value="Data Entry">Data Entry</option>
+      <option value="Other">Other</option>
+    </select>
 
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+    {/* Dropdown arrow icon */}
+    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
       <svg
         width="10"
         height="6"
@@ -285,6 +292,7 @@ const handleSubmit = async (e) => {
         />
       </svg>
     </div>
+  </div>
               </div>
 
               {/* Message */}

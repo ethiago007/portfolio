@@ -59,6 +59,13 @@ const skills = [
     tags: ["Discord", "Slack", "Engagement", "Moderation"],
     accent: "#ff6b35",
   },
+  {
+    icon: "🧪",
+    title: "App Tester",
+    desc: "Testing apps for bugs, usability, and performance — ensuring a smooth user experience.",
+    tags: ["Bug Reporting", "Usability Testing", "Performance Testing", "Feedback Collection"],
+    accent: "#e8ff47",
+  }
 ];
 
 function SkillCard({ skill, index }) {

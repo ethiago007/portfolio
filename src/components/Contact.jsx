@@ -264,8 +264,27 @@ const handleSubmit = async (e) => {
                   <option value="Community Management">Community Management</option>
                   <option value="Virtual Assistant">Virtual Assistant</option>
                   <option value="Data Entry">Data Entry</option>
+                  <option value="App Tester">App Tester</option>
                   <option value="Other">Other</option>
                 </select>
+
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+      <svg
+        width="10"
+        height="6"
+        viewBox="0 0 10 6"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M1 1L5 5L9 1"
+          stroke="#e8ff47"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
               </div>
 
               {/* Message */}

@@ -271,6 +271,7 @@ export default function Contact() {
       <option value="Community Management">Community Management</option>
       <option value="Virtual Assistant">Virtual Assistant</option>
       <option value="Data Entry">Data Entry</option>
+      <option value="App Tester">App Tester</option>
       <option value="Other">Other</option>
     </select>
 
